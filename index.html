@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 <title>FX Terminal v1.0</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
@@ -307,7 +307,78 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-</style>
+
+  /* ─── iPHONE / MOBILE ─── */
+  @media (max-width: 480px) {
+
+    /* safe area for notch / Dynamic Island */
+    body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+
+    /* ── header ── */
+    .header { padding: 10px 14px 8px; flex-direction: column; align-items: flex-start; gap: 4px; }
+    .logo { font-size: 1.25rem; letter-spacing: 2px; }
+    .version { font-size: 0.6rem; }
+    .status-bar { gap: 12px; }
+    .status-item { font-size: 0.64rem; }
+
+    /* ── toolbar ── */
+    .toolbar { padding: 8px 10px; gap: 6px; }
+    .toolbar button { font-size: 0.68rem; padding: 6px 10px; letter-spacing: 0.8px; }
+    .toolbar .sep { display: none; }                       /* hide separators */
+    .toolbar input { width: 100%; order: 5; margin-top: 4px; font-size: 0.8rem; padding: 6px 10px; }  /* search goes full-width on 2nd row */
+
+    /* ── bundle cards ── */
+    .bundles-bar { padding: 10px 10px; gap: 8px; }
+    .bundle-card { min-width: 158px; padding: 9px 10px 8px; }
+    .bundle-pair { font-size: 0.75rem; margin-top: 2px; }
+    .bundle-pair .arr { margin: 0 2px; }
+    .bundle-badge { font-size: 0.5rem; padding: 1px 5px; right: 6px; }
+    .bundle-step-label { width: 76px; font-size: 0.58rem; }
+    .bundle-step-val { font-size: 0.66rem; }
+    .bundle-step-fee { font-size: 0.52rem; }
+    .bundle-label { font-size: 0.58rem; }
+    .bundle-val { font-size: 0.68rem; }
+    .bundle-net { font-size: 0.7rem !important; }
+    .bundle-commission { margin-top: 5px; padding-top: 4px; }
+    .bundle-row { margin-top: 4px; }
+
+    /* ── table ── */
+    .main { padding: 12px 10px; }
+    thead th, tbody td { padding: 9px 7px; font-size: 0.72rem; letter-spacing: 0.6px; }
+    thead th { font-size: 0.6rem; letter-spacing: 1px; }
+    .symbol { font-size: 0.78rem; }
+    .name { font-size: 0.6rem; }
+    .tag { font-size: 0.5rem; padding: 1px 4px; margin-left: 3px; }
+
+    /* hide HIGH 24H & LOW 24H columns on mobile */
+    thead th:nth-child(4),
+    thead th:nth-child(5),
+    tbody td:nth-child(4),
+    tbody td:nth-child(5) { display: none; }
+
+    /* ── converter ── */
+    .converter-panel { padding: 14px 12px; margin-top: 14px; }
+    .converter-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    .converter-row input { width: 100%; font-size: 1rem; padding: 10px; }   /* bigger tap target */
+    .converter-row select { width: 100%; font-size: 1rem; padding: 10px; }
+    .converter-row .eq { text-align: center; font-size: 1.1rem; }
+    .converter-result { text-align: center; font-size: 1.1rem; }
+    .converter-title { font-size: 0.65rem; }
+
+    /* ── log ── */
+    .log-panel { padding: 10px 12px; margin-top: 14px; max-height: 110px; }
+    .log-line { font-size: 0.64rem; }
+  }
+
+  /* ── very small iPhones (SE / 12 mini) ── */
+  @media (max-width: 350px) {
+    .bundle-card { min-width: 140px; padding: 8px 8px 7px; }
+    .bundle-pair { font-size: 0.7rem; }
+    .bundle-step-label { width: 68px; font-size: 0.54rem; }
+    .bundle-step-val { font-size: 0.6rem; }
+    thead th, tbody td { padding: 7px 5px; font-size: 0.66rem; }
+    .toolbar button { font-size: 0.64rem; padding: 5px 8px; }
+  }</style>
 </head>
 <body>
 
@@ -315,7 +386,7 @@
 <div class="header">
   <div class="header-left">
     <div class="logo">META<span>FLOW</span></div>
-    <div class="version">v1.0 — WORLD EXCHANGE MONITOR - powered by Lobster inc</div>
+    <div class="version">v1.0 — WORLD EXCHANGE MONITOR by Lobster IN</div>
   </div>
   <div class="status-bar">
     <div class="status-item" id="statusConn"><span class="dot"></span>CONNECTED</div>
