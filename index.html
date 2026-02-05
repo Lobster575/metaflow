@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METAFLOW v2.0 - Arbitrage Monitor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="logo">METAFLOW</h1>
+                <span class="version">v2.0 - ARBITRAGE MONITOR</span>
+            </div>
+            <div class="header-right">
+                <div class="status">
+                    <div class="status-dot"></div>
+                    <span class="status-text">CONNECTED</span>
+                </div>
+                <span class="time" id="time"></span>
+            </div>
+        </header>
+
+        <!-- Arbitrage Opportunities -->
+        <section class="arbitrage-section">
+            <h2 class="section-title">
+                <span class="icon">⚡</span> TOP ARBITRAGE OPPORTUNITIES
+            </h2>
+            <div class="arbitrage-grid" id="arbitrage-grid">
+                <!-- Будет заполнено через JavaScript -->
+            </div>
+        </section>
+
+        <!-- Exchange Selector -->
+        <section class="exchange-selector">
+            <span class="selector-label">EXCHANGE:</span>
+            <div class="exchange-buttons" id="exchange-buttons">
+                <button class="exchange-btn active" data-exchange="binance">BINANCE</button>
+                <button class="exchange-btn" data-exchange="kraken">KRAKEN</button>
+                <button class="exchange-btn" data-exchange="eflow">EFLOW</button>
+                <button class="exchange-btn" data-exchange="coinbase">COINBASE</button>
+                <button class="exchange-btn" data-exchange="bitfinex">BITFINEX</button>
+            </div>
+        </section>
+
+        <!-- Crypto Table -->
+        <section class="crypto-table-section">
+            <table class="crypto-table">
+                <thead>
+                    <tr>
+                        <th class="text-left">CURRENCY</th>
+                        <th class="text-right">RATE (USD)</th>
+                        <th class="text-right">CHANGE</th>
+                        <th class="text-right">HIGH 24H</th>
+                        <th class="text-right">LOW 24H</th>
+                    </tr>
+                </thead>
+                <tbody id="crypto-tbody">
+                    <!-- Будет заполнено через JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>METAFLOW v2.0 | Real-time Arbitrage Monitor | Powered by Multi-Exchange API</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

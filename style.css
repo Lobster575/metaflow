@@ -1,0 +1,459 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #0f0818 0%, #1a0b2e 50%, #0f0818 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #a855f7 0%, #ec4899 50%, #a855f7 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient 3s ease infinite;
+}
+
+.version {
+    font-size: 14px;
+    color: #a855f7;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-text {
+    color: #4ade80;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.time {
+    color: #d8b4fe;
+    font-size: 14px;
+}
+
+/* Arbitrage Section */
+.arbitrage-section {
+    margin-bottom: 32px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d8b4fe;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon {
+    color: #ec4899;
+}
+
+.arbitrage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.arbitrage-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(126, 34, 206, 0.4) 0%, rgba(219, 39, 119, 0.4) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.arbitrage-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.arbitrage-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.arbitrage-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.arbitrage-card:hover {
+    border-color: rgba(236, 72, 153, 0.5);
+    box-shadow: 0 10px 40px rgba(168, 85, 247, 0.2);
+    transform: translateY(-4px);
+}
+
+.profit-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 12px;
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: 6px;
+    color: #4ade80;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.arb-header {
+    margin-bottom: 16px;
+}
+
+.arb-crypto {
+    font-size: 28px;
+    font-weight: bold;
+    color: #e9d5ff;
+}
+
+.arb-label {
+    font-size: 12px;
+    color: #a855f7;
+    margin-left: 8px;
+}
+
+.arb-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.arb-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arb-row-label {
+    color: #d8b4fe;
+}
+
+.arb-row-value {
+    font-weight: bold;
+}
+
+.buy-value {
+    color: #4ade80;
+}
+
+.sell-value {
+    color: #ec4899;
+}
+
+.volume-value {
+    color: #e9d5ff;
+}
+
+.arb-divider {
+    padding-top: 8px;
+    border-top: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+/* Exchange Selector */
+.exchange-selector {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(126, 34, 206, 0.3);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.7s ease-out;
+    flex-wrap: wrap;
+}
+
+.selector-label {
+    color: #d8b4fe;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.exchange-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.exchange-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(126, 34, 206, 0.5);
+    color: #d8b4fe;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.exchange-btn:hover {
+    background: rgba(126, 34, 206, 0.7);
+    transform: translateY(-2px);
+}
+
+.exchange-btn.active {
+    background: linear-gradient(90deg, #7e22ce 0%, #be185d 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.5);
+}
+
+/* Crypto Table */
+.crypto-table-section {
+    background: rgba(126, 34, 206, 0.2);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.8s ease-out;
+    margin-bottom: 32px;
+}
+
+.crypto-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.crypto-table thead tr {
+    background: linear-gradient(90deg, rgba(126, 34, 206, 0.5) 0%, rgba(219, 39, 119, 0.5) 100%);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.crypto-table th {
+    padding: 16px;
+    color: #d8b4fe;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.crypto-table tbody tr {
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    transition: all 0.3s ease;
+    animation: fadeInLeft 0.3s ease-out backwards;
+}
+
+.crypto-table tbody tr:hover {
+    background: rgba(126, 34, 206, 0.3);
+}
+
+.crypto-table td {
+    padding: 16px;
+}
+
+.currency-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.currency-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.currency-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.currency-symbol {
+    font-weight: bold;
+    color: #e9d5ff;
+    font-size: 16px;
+}
+
+.currency-name {
+    font-size: 12px;
+    color: #a855f7;
+}
+
+.rate {
+    font-weight: bold;
+    color: #e9d5ff;
+}
+
+.change {
+    font-weight: bold;
+}
+
+.change.positive {
+    color: #4ade80;
+}
+
+.change.negative {
+    color: #ef4444;
+}
+
+.high {
+    color: #4ade80;
+    font-weight: bold;
+}
+
+.low {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: rgba(168, 85, 247, 0.5);
+    font-size: 12px;
+    margin-top: 32px;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .logo {
+        font-size: 28px;
+    }
+
+    .arbitrage-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .exchange-selector {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .crypto-table-section {
+        overflow-x: auto;
+    }
+
+    .crypto-table {
+        min-width: 600px;
+    }
+}
