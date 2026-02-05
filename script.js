@@ -1,6 +1,16 @@
 // Данные бирж
 const exchanges = ['binance', 'kraken', 'eflow', 'coinbase', 'bitfinex'];
 let currentExchange = 'binance';
+let currentChartType = 'line';
+let currentCrypto = 'BTC';
+let priceChart = null;
+let chartData = {
+    BTC: [],
+    ETH: [],
+    SOL: [],
+    BNB: [],
+    AVAX: []
+};
 
 // Базовые курсы криптовалют
 const baseRates = {
@@ -186,24 +196,253 @@ function setupExchangeButtons() {
     });
 }
 
+// Инициализация графика
+function initChart() {
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    
+    // Генерируем начальные данные для всех криптовалют
+    const now = Date.now();
+    ['BTC', 'ETH', 'SOL', 'BNB', 'AVAX'].forEach(crypto => {
+        chartData[crypto] = [];
+        for (let i = 30; i >= 0; i--) {
+            const time = now - i * 2000;
+            const basePrice = baseRates[crypto].rate;
+            const price = basePrice * (0.98 + Math.random() * 0.04);
+            chartData[crypto].push({
+                time: time,
+                price: price,
+                open: price * 0.995,
+                high: price * 1.005,
+                low: price * 0.995,
+                close: price
+            });
+        }
+    });
+    
+    priceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartData[currentCrypto].map(d => new Date(d.time).toLocaleTimeString()),
+            datasets: [{
+                label: `${currentCrypto} Price (USD)`,
+                data: chartData[currentCrypto].map(d => d.price),
+                borderColor: '#a855f7',
+                backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: '#ec4899',
+                pointHoverBorderColor: '#ffffff',
+                pointHoverBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#d8b4fe',
+                        font: {
+                            family: "'Courier New', monospace",
+                            size: 12
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    borderColor: '#a855f7',
+                    borderWidth: 1,
+                    titleColor: '#d8b4fe',
+                    bodyColor: '#ffffff',
+                    titleFont: {
+                        family: "'Courier New', monospace"
+                    },
+                    bodyFont: {
+                        family: "'Courier New', monospace"
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: 'rgba(168, 85, 247, 0.1)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#a855f7',
+                        font: {
+                            family: "'Courier New', monospace",
+                            size: 10
+                        },
+                        maxTicksLimit: 8
+                    }
+                },
+                y: {
+                    grid: {
+                        color: 'rgba(168, 85, 247, 0.1)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#a855f7',
+                        font: {
+                            family: "'Courier New', monospace",
+                            size: 10
+                        },
+                        callback: function(value) {
+                            return '$' + value.toFixed(2);
+                        }
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            }
+        }
+    });
+}
+
+// Обновление графика
+function updateChart() {
+    if (!priceChart) return;
+    
+    const now = Date.now();
+    const basePrice = baseRates[currentCrypto].rate;
+    const price = basePrice * (0.98 + Math.random() * 0.04);
+    
+    // Добавляем новую точку
+    chartData[currentCrypto].push({
+        time: now,
+        price: price,
+        open: price * 0.995,
+        high: price * 1.005,
+        low: price * 0.995,
+        close: price
+    });
+    
+    // Ограничиваем количество точек
+    if (chartData[currentCrypto].length > 30) {
+        chartData[currentCrypto].shift();
+    }
+    
+    // Обновляем данные графика
+    if (currentChartType === 'line') {
+        priceChart.data.labels = chartData[currentCrypto].map(d => 
+            new Date(d.time).toLocaleTimeString()
+        );
+        priceChart.data.datasets[0].data = chartData[currentCrypto].map(d => d.price);
+        priceChart.data.datasets[0].label = `${currentCrypto} Price (USD)`;
+    } else {
+        // Для свечей
+        priceChart.data.labels = chartData[currentCrypto].map(d => 
+            new Date(d.time).toLocaleTimeString()
+        );
+        priceChart.data.datasets = [{
+            label: `${currentCrypto} OHLC`,
+            data: chartData[currentCrypto].map(d => ({
+                x: new Date(d.time).toLocaleTimeString(),
+                o: d.open,
+                h: d.high,
+                l: d.low,
+                c: d.close
+            })),
+            borderColor: chartData[currentCrypto].map(d => 
+                d.close >= d.open ? '#4ade80' : '#ef4444'
+            ),
+            backgroundColor: chartData[currentCrypto].map(d => 
+                d.close >= d.open ? 'rgba(74, 222, 128, 0.5)' : 'rgba(239, 68, 68, 0.5)'
+            )
+        }];
+    }
+    
+    priceChart.update('none');
+}
+
+// Переключение типа графика
+function setupChartControls() {
+    // Переключение типа графика
+    const chartTypeBtns = document.querySelectorAll('.chart-type-btn');
+    chartTypeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            chartTypeBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            currentChartType = btn.dataset.type;
+            
+            if (currentChartType === 'line') {
+                priceChart.config.type = 'line';
+                priceChart.data.datasets = [{
+                    label: `${currentCrypto} Price (USD)`,
+                    data: chartData[currentCrypto].map(d => d.price),
+                    borderColor: '#a855f7',
+                    backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#ec4899',
+                    pointHoverBorderColor: '#ffffff',
+                    pointHoverBorderWidth: 2
+                }];
+            } else {
+                priceChart.config.type = 'bar';
+                priceChart.data.datasets = [{
+                    label: `${currentCrypto} OHLC`,
+                    data: chartData[currentCrypto].map(d => d.close),
+                    backgroundColor: chartData[currentCrypto].map(d => 
+                        d.close >= d.open ? 'rgba(74, 222, 128, 0.7)' : 'rgba(239, 68, 68, 0.7)'
+                    ),
+                    borderColor: chartData[currentCrypto].map(d => 
+                        d.close >= d.open ? '#4ade80' : '#ef4444'
+                    ),
+                    borderWidth: 1
+                }];
+            }
+            
+            priceChart.update();
+        });
+    });
+    
+    // Выбор криптовалюты
+    const cryptoSelect = document.getElementById('chart-crypto');
+    cryptoSelect.addEventListener('change', (e) => {
+        currentCrypto = e.target.value;
+        updateChart();
+        priceChart.update();
+    });
+}
+
 // Обновление всех данных
 function updateAllData() {
     updateTime();
     renderArbitrageOpportunities();
     renderCryptoTable();
+    updateChart();
 }
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     setupExchangeButtons();
+    setupChartControls();
     updateAllData();
+    
+    // Инициализация графика
+    setTimeout(() => {
+        initChart();
+    }, 100);
     
     // Обновление времени каждую секунду
     setInterval(updateTime, 1000);
     
-    // Обновление данных каждые 5 секунд
+    // Обновление данных каждые 2 секунды
     setInterval(() => {
         renderArbitrageOpportunities();
         renderCryptoTable();
-    }, 5000);
+        updateChart();
+    }, 2000);
 });
