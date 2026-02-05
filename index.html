@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>METAFLOW v2.0 - Arbitrage Monitor</title>
+    <title>METAFLOW v0.0.2 - Arbitrage Monitor</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -12,7 +13,7 @@
         <header class="header">
             <div class="header-left">
                 <h1 class="logo">METAFLOW</h1>
-            <span class="version">v0.0.2 - by Lobster</span>
+                <span class="version">v0.0.2 - by Lobster</span>
             </div>
             <div class="header-right">
                 <div class="status">
@@ -30,6 +31,31 @@
             </h2>
             <div class="arbitrage-grid" id="arbitrage-grid">
                 <!-- Будет заполнено через JavaScript -->
+            </div>
+        </section>
+
+        <!-- Live Chart Section -->
+        <section class="chart-section">
+            <div class="chart-header">
+                <h2 class="section-title">
+                    <span class="icon">📈</span> LIVE MARKET CHART
+                </h2>
+                <div class="chart-controls">
+                    <select class="crypto-select" id="chart-crypto">
+                        <option value="BTC">BTC - Bitcoin</option>
+                        <option value="ETH">ETH - Ethereum</option>
+                        <option value="SOL">SOL - Solana</option>
+                        <option value="BNB">BNB - Binance Coin</option>
+                        <option value="AVAX">AVAX - Avalanche</option>
+                    </select>
+                    <div class="chart-type-buttons">
+                        <button class="chart-type-btn active" data-type="line">LINE</button>
+                        <button class="chart-type-btn" data-type="candle">CANDLES</button>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
             </div>
         </section>
 
@@ -65,7 +91,7 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>METAFLOW v2.0 | Real-time Arbitrage Monitor | Powered by Multi-Exchange API</p>
+            <p>METAFLOW v0.0.2 | Real-time Arbitrage Monitor | by Lobster</p>
         </footer>
     </div>
 
