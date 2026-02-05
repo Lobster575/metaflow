@@ -6,7 +6,9 @@
 
 body {
     font-family: 'Courier New', monospace;
-    background: linear-gradient(135deg, #0f0818 0%, #1a0b2e 50%, #0f0818 100%);
+    background: linear-gradient(135deg, #000000 0%, #0a0015 25%, #1a0033 50%, #0a0015 75%, #000000 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     color: #ffffff;
     min-height: 100vh;
     padding: 24px;
@@ -35,12 +37,17 @@ body {
 .logo {
     font-size: 36px;
     font-weight: bold;
-    background: linear-gradient(90deg, #a855f7 0%, #ec4899 50%, #a855f7 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradient 3s ease infinite;
+    color: #a855f7;
+    text-shadow: 
+        0 0 10px #a855f7,
+        0 0 20px #a855f7,
+        0 0 30px #a855f7,
+        0 0 40px #8b5cf6,
+        0 0 70px #8b5cf6,
+        0 0 80px #8b5cf6,
+        0 0 100px #8b5cf6;
+    animation: neonFlicker 3s ease-in-out infinite;
+    letter-spacing: 2px;
 }
 
 .version {
@@ -99,6 +106,96 @@ body {
     color: #ec4899;
 }
 
+/* Chart Section */
+.chart-section {
+    margin-bottom: 32px;
+    animation: fadeInUp 0.7s ease-out;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.chart-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.crypto-select {
+    padding: 10px 16px;
+    background: rgba(126, 34, 206, 0.3);
+    border: 1px solid rgba(168, 85, 247, 0.5);
+    border-radius: 8px;
+    color: #d8b4fe;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+.crypto-select:hover {
+    background: rgba(126, 34, 206, 0.5);
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+}
+
+.crypto-select option {
+    background: #1a0033;
+    color: #d8b4fe;
+}
+
+.chart-type-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.chart-type-btn {
+    padding: 10px 20px;
+    background: rgba(126, 34, 206, 0.3);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 8px;
+    color: #d8b4fe;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chart-type-btn:hover {
+    background: rgba(126, 34, 206, 0.5);
+    transform: translateY(-2px);
+}
+
+.chart-type-btn.active {
+    background: linear-gradient(90deg, #7e22ce 0%, #be185d 100%);
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+}
+
+.chart-container {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 0 20px rgba(168, 85, 247, 0.2),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    height: 400px;
+}
+
+#priceChart {
+    max-height: 360px;
+}
+
 .arbitrage-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -107,13 +204,16 @@ body {
 
 .arbitrage-card {
     position: relative;
-    background: linear-gradient(135deg, rgba(126, 34, 206, 0.4) 0%, rgba(219, 39, 119, 0.4) 100%);
-    border: 1px solid rgba(168, 85, 247, 0.3);
+    background: linear-gradient(135deg, rgba(80, 20, 140, 0.3) 0%, rgba(140, 20, 80, 0.3) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.4);
     border-radius: 12px;
     padding: 20px;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     animation: fadeInUp 0.5s ease-out backwards;
+    box-shadow: 
+        0 0 20px rgba(168, 85, 247, 0.2),
+        inset 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
 .arbitrage-card:nth-child(1) {
@@ -206,7 +306,7 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    background: rgba(126, 34, 206, 0.3);
+    background: rgba(80, 20, 140, 0.2);
     border: 1px solid rgba(168, 85, 247, 0.3);
     border-radius: 12px;
     padding: 20px;
@@ -214,6 +314,9 @@ body {
     backdrop-filter: blur(10px);
     animation: fadeInUp 0.7s ease-out;
     flex-wrap: wrap;
+    box-shadow: 
+        0 0 20px rgba(168, 85, 247, 0.15),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
 .selector-label {
@@ -253,13 +356,16 @@ body {
 
 /* Crypto Table */
 .crypto-table-section {
-    background: rgba(126, 34, 206, 0.2);
+    background: rgba(80, 20, 140, 0.15);
     border: 1px solid rgba(168, 85, 247, 0.3);
     border-radius: 12px;
     overflow: hidden;
     backdrop-filter: blur(10px);
     animation: fadeInUp 0.8s ease-out;
     margin-bottom: 32px;
+    box-shadow: 
+        0 0 20px rgba(168, 85, 247, 0.15),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
 .crypto-table {
@@ -413,6 +519,36 @@ body {
 }
 
 @keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes neonFlicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 
+            0 0 10px #a855f7,
+            0 0 20px #a855f7,
+            0 0 30px #a855f7,
+            0 0 40px #8b5cf6,
+            0 0 70px #8b5cf6,
+            0 0 80px #8b5cf6,
+            0 0 100px #8b5cf6;
+    }
+    20%, 24%, 55% {
+        text-shadow: 
+            0 0 5px #a855f7,
+            0 0 10px #a855f7;
+    }
+}
+
+@keyframes gradientShift {
     0% {
         background-position: 0% 50%;
     }
